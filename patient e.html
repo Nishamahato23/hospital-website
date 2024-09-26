@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patients Registration Form</title>
+  <style>
+        header {
+      /* background-color: #333;  */
+      color: #2e2b2b;
+      padding: 20px;
+      
+      
+       /* background-color: #888d8b;   */
+      color: #1f1c1c;
+      padding: 5px;
+      /* header { */
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 97%;
+    /* padding: 10px 0px; */
+    /* background:burlywood; */
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+} 
+    
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: antiquewhite;
+    }
+    .container {
+        float: right;
+      margin: 90px auto;
+      width: 400px;
+      padding: 30px;
+      border: 3px solid #0b260b;
+      border-radius: 5px;
+    }
+    .container h2 {
+      text-align: center;
+      /* float: right; */
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #0b371d;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    #registered-list {
+      margin-top: 0px;
+      list-style-type: none;
+      padding: 0;
+    }
+    #registered-list li {
+      padding: 5px;
+      background-color: #989896;
+      border: 1px solid #090a0b;
+      margin-bottom: 5px;
+    }
+
+    .navigation .btnLogout-popup{
+  width: 100%;
+  padding-top: 0%;
+  float:right;
+  background-color:#f7f1f1;
+  font-size: medium;
+  color: #1d1c1c;
+}
+.navigation .btnLogout-popup:hover {
+    background: #da2525;
+    color: #162938;
+}
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+    <header>
+        <h1>Patient Page</h1>
+        <nav class="navigation">
+    <button class="btnLogout-popup"><a href="ind.html">LogOut</a></button>
+    </nav>
+</header>
+   <div class="container">
+    <h2>New Registration</h2>
+    <form id="registration-form">
+
+        
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone No:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+        <small>Format: 10-digit phone number</small>
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit">Register</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <h2> Registered Patients</h2>
+    <ul id="registered-list"></ul>
+  </div>
+ <script>
+    // Store registered data
+    var registeredUsers = [];
+
+    // Handle form submission
+    document.getElementById("registration-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var name = document.getElementById("name").value;
+      var phone = document.getElementById("phone").value;
+      var gender = document.getElementById("gender").value;
+      var email = document.getElementById("email").value;
+      var address = document.getElementById("address").value;
+
+      // Create a new user object
+      var user = {
+        name: name,
+        phone: phone,
+        gender: gender,
+        email: email,
+        address: address
+      };
+
+      // Add the user to the registeredUsers array
+      registeredUsers.push(user);
+
+      // Clear the form inputs
+      document.getElementById("registration-form").reset();
+
+      // Display the registered users
+      displayRegisteredUsers();
+    });
+
+    // Function to display registered users
+    function displayRegisteredUsers() {
+      var registeredList = document.getElementById("registered-list");
+      registeredList.innerHTML = "";
+
+      // Loop through the registeredUsers array and create list items
+      for (var i = 0; i < registeredUsers.length; i++) {
+        var user = registeredUsers[i];
+
+        var listItem = document.createElement("li");
+        listItem.innerHTML = "<strong>Name:</strong> " + user.name + "<br>" +
+                             "<strong>Phone No:</strong> " + user.phone + "<br>" +
+                             "<strong>Gender:</strong> " + user.gender + "<br>" +
+                             "<strong>Email:</strong> " + user.email + "<br>" +
+                             "<strong>Address:</strong> " + user.address;
+
+        registeredList.appendChild(listItem);
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+ <!-- <div class="container1">
+    <h2>Registered Patients</h2>
+    <table id="patientTable">
+      <thead>
+        <tr>
+          <th> Name</th>
+          <th>Phone No</th>
+          <th>Gender</th>
+        </tr>
+      </thead>
+      <tbody id="patientData">
+        <tr>
+          <td>Amit Arora</td>
+          <td>3200960000</td>
+          <td>Male</td>
+        </tr>
+        <tr>
+          <td>Sumita Mehra</td>
+          <td>2010001000</td>
+          <td>Female</td>
+        </tr>
+        <tr>
+          <td>Raman Awasti</td>
+          <td>2200009000</td>
+          <td>Male</td>
+        </tr>
+        <tr>
+          <td>Radhika Singhania</td>
+          <td>2000000008</td>
+          <td>Female</td>
+        </tr>
+        <tr>
+          <td>Murtashim Khan</td>
+          <td>3100000000</td>
+          <td>Male</td>
+        </tr>
+        <tr>
+          <td> Harsh Mishra</td>
+          <td>4000000004</td>
+          <td>Male</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
