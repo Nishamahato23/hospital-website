@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Page</title>
+  <style>
+    /* CSS styles for the admin page */
+    .btnLogout-popup{
+  width: 10%;
+  padding-top: 0%;
+  float:right;
+  background-color:#e9e3e6;
+  font-size: medium;
+}
+
+/* .container {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;} */
+
+.navigation .btnLogout-popup:hover {
+    background: #da2525;
+    color: #162938;
+}
+
+
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: antiquewhite;
+    }
+  
+    header {
+      background-color: #f4f0f0;
+      color: #1b1919;
+      padding: 20px;
+      text-align: center;
+    }
+  
+    h1 {
+      margin: 0;
+    }
+  h2 {
+    
+    /* background-color: #f4f0f0; */
+      color: #1b1919;
+      padding: 20px;
+      text-align: center;
+    }
+
+
+    nav {
+      background-color: #f4f4f4;
+      padding: 0px;
+    }
+  
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 20;
+    }
+  
+    nav ul li {
+      display: inline-block;
+      margin-right: 160px;
+    }
+  
+    section {
+      padding: 40px;
+      
+    }
+  
+    #registration {
+      float: right;
+      /*width: 30%; */
+      padding: 50px;
+      /* background-color: #f4f4f4; */
+      /* float: right; */
+      margin: 90px auto;
+      width: 400px;
+      padding: 30px;
+      border: 3px solid #0b260b;
+      border-radius: 5px;
+      /* text-align: center; */
+
+      
+ }
+
+
+
+
+
+
+
+ .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 96%;
+      padding: 10px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+ .button {
+      width: 100%;
+      padding: 10px;
+      background-color: #789383;
+      border: none;
+      color: rgb(18, 88, 51);
+      cursor: pointer;
+      border-radius: 3px;
+      position: center  ;
+      
+ }
+
+
+
+
+
+ form button {
+      display: block;
+      width: 100%;
+      
+      padding: 10px ;
+      background-color: #0c5444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 30px;
+      
+    }
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin Page</h1>
+    <nav class="navigation">
+    <button class="btnLogout-popup"><a href="ind.html">LogOut</a></button>
+    </nav>  
+</header>
+  
+  <nav>
+    <ul>
+      <li><a href="ind.html">Home</a></li>
+      <li><a href="doctor patient.html">Doctors</a></li>
+      <li><a href="patient e.html">Patients</a></li>
+    </ul>
+  </nav>
+   <section>
+    <div class="container">
+      <div class="registration-form">
+    
+    <div id="registration">
+      <h2>New Registration</h2>
+      <!-- Add registration form elements here -->
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <label for="page">Select a page:</label>
+        <select id="page" name="page">
+          <option value="">Choose a page</option>
+          <!-- <option value="page1.html">Home Page</option> -->
+          <option value="doctor pg.html">Doctor Page</option>
+          <option value="patient e.html">Patient Page</option>
+        </select>
+        
+        <!-- <input type="submit" value="Register"> -->
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </section>
+   <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent the form from submitting normally
+      
+      var selectedPage = document.getElementById('page').value;
+      
+      if (selectedPage !== '') {
+        window.location.href = selectedPage; // Redirect to the selected page
+      }
+    });
+  </script>
+</body>
+</html>
