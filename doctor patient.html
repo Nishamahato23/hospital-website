@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctor and Patient Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: antiquewhite;
+    }
+    .container {
+      margin: 50px auto;
+      width: 600px;
+      padding: 20px;
+      border: 4px solid #d9dbb5;
+      border-radius: 50px;
+      float:right;
+    }
+    .container h2 {
+      text-align: center;
+      
+      
+      
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 98%;
+      padding: 10px;
+      border-radius: 2px;
+      border: 2px solid #ccc;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 3px;
+      
+
+    }
+    #doctor-list,
+    #patient-table {
+      margin-top: 20px;
+      width: 100%;
+      border-collapse: collapse; 
+      
+    }
+    #doctor-list th,
+    #patient-table th,
+    #patient-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+    .navigation .btnLogout-popup{
+  width: 10%;
+  padding-top: 0%;
+  float:right;
+  background-color:#f7f1f1;
+  font-size: medium;
+  color: #1d1c1c;
+  padding-top: 0%;
+}
+.navigation .btnLogout-popup:hover {
+    background: #da2525;
+    color: #162938;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Patient Page</h1>
+    <nav class="navigation">
+<button class="btnLogout-popup"><a href="ind.html">LogOut</a></button>
+</nav>
+</header>
+
+  <div class="container">
+    <h2>Doctor Registration</h2>
+    <form id="doctor-registration-form">
+      <div class="form-group">
+        <label for="doctor-name">Name:</label>
+        <input type="text" id="doctor-name" required>
+      </div>
+      <div class="form-group">
+        <label for="doctor-specialty">Specialty:</label>
+        <input type="text" id="doctor-specialty" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Register Doctor</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <h2>Patient Registration</h2>
+    <form id="patient-registration-form">
+      <div class="form-group">
+        <label for="patient-name">Name:</label>
+        <input type="text" id="patient-name" required>
+      </div>
+      <div class="form-group">
+        <label for="patient-age">Age:</label>
+        <input type="number" id="patient-age" required>
+      </div>
+      <!-- <div class="form-group">
+        <label for="patient-bloodgroup">Blood Group:</label>
+        <input type="text" id="patient-bloodgroup" required>
+      </div> -->
+      <!-- <div class="form-group">
+        <label for="phone">Phone No:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+
+      </div> -->
+      <div class="form-group">
+        <label for="patient-doctor">Doctor:</label>
+        <select id="patient-doctor" required>
+          <option value="">Select Doctor</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button type="submit">Register Patient</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <h2>Registered Doctors</h2>
+    <ul id="doctor-list"></ul>
+  </div>
+
+  <div class="container">
+    <h2>Registered Patients</h2>
+    <table id="patient-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <!-- <th>Blood Group</th> -->
+          <!-- <th>Phone No</th> -->
+            <th>Doctor</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    // Store registered doctor and patient data
+    var registeredDoctors = [];
+    var registeredPatients = [];
+
+    // Get form elements
+    var doctorForm = document.getElementById("doctor-registration-form");
+    var patientForm = document.getElementById("patient-registration-form");
+    var doctorList = document.getElementById("doctor-list");
+    var patientTable = document.getElementById("patient-table").getElementsByTagName("tbody")[0];
+    var patientDoctorSelect = document.getElementById("patient-doctor");
+
+    // Handle doctor registration form submission
+    doctorForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      var doctorName = document.getElementById("doctor-name").value;
+      var doctorSpecialty = document.getElementById("doctor-specialty").value;
+
+      // Create a new doctor object
+      var doctor = {
+        name: doctorName,
+        specialty: doctorSpecialty
+      };
+
+      // Add the doctor to the registeredDoctors array
+      registeredDoctors.push(doctor);
+
+      // Clear the form inputs
+      doctorForm.reset();
+
+      // Update the doctor list
+      displayDoctorList();
+      updatePatientDoctorOptions();
+    });
+
+    // Handle patient registration form submission
+    patientForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      var patientName = document.getElementById("patient-name").value;
+      var patientAge = document.getElementById("patient-age").value;
+      var patientDoctor = document.getElementById("patient-doctor").value;
+
+      // Create a new patient object
+      var patient = {
+        name: patientName,
+        age: patientAge,
+        doctor: patientDoctor
+      };
+
+      // Add the patient to the registeredPatients array
+      registeredPatients.push(patient);
+
+      // Clear the form inputs
+      patientForm.reset();
+
+      // Update the patient table
+      displayPatientTable();
+    });
+
+    // Function to display the doctor list
+    function displayDoctorList() {
+      doctorList.innerHTML = "";
+
+      // Loop through the registeredDoctors array and create list items
+      for (var i = 0; i < registeredDoctors.length; i++) {
+        var doctor = registeredDoctors[i];
+        var listItem = document.createElement("li");
+        listItem.textContent = "Name: " + doctor.name + ", Specialty: " + doctor.specialty;
+        doctorList.appendChild(listItem);
+      }
+    }
+
+    // Function to update the options in the patient doctor select dropdown
+    function updatePatientDoctorOptions() {
+      patientDoctorSelect.innerHTML = "<option value=''>Select Doctor</option>";
+
+      // Loop through the registeredDoctors array and add options to the select element
+      for (var i = 0; i < registeredDoctors.length; i++) {
+        var doctor = registeredDoctors[i];
+        var option = document.createElement("option");
+        option.value = doctor.name;
+        option.textContent = doctor.name;
+        patientDoctorSelect.appendChild(option);
+      }
+    }
+
+    // Function to display the patient table
+    function displayPatientTable() {
+      patientTable.innerHTML = "";
+
+      // Loop through the registeredPatients array and create table rows
+      for (var i = 0; i < registeredPatients.length; i++) {
+        var patient = registeredPatients[i];
+        var row = patientTable.insertRow(i);
+        var nameCell = row.insertCell(0);
+        var ageCell = row.insertCell(1);
+        var doctorCell = row.insertCell(2);
+
+        nameCell.textContent = patient.name;
+        ageCell.textContent = patient.age;
+        doctorCell.textContent = patient.doctor;
+      }
+    }
+  </script>
+</body>
+</html>
